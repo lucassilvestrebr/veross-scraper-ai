@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{margin:0;background:#050A1E;}
+input,select{outline:none;font-family:'DM Sans',sans-serif;}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:#AE8A56;border-radius:3px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#050A1E;font-family:'DM Sans',sans-serif;color:#F0F0F8">
+
+<!-- CHECKING -->
+<sc-if value="{{isChecking}}" hint-placeholder-val="{{true}}">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px">
+    <div style="width:32px;height:32px;border:2.5px solid rgba(174,138,86,0.15);border-top-color:#AE8A56;border-radius:50%;animation:spin 0.7s linear infinite"></div>
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(174,138,86,0.4);letter-spacing:2px;text-transform:uppercase">Verificando acesso...</div>
+  </div>
+</sc-if>
+
+<!-- LOGIN -->
+<sc-if value="{{isLogin}}" hint-placeholder-val="{{false}}">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeUp 0.35s ease">
+    <div style="width:100%;max-width:380px;background:#0C1235;border:1px solid rgba(174,138,86,0.2);border-radius:16px;padding:36px 32px;box-shadow:0 16px 56px rgba(0,0,0,0.55)">
+      <div style="text-align:center;margin-bottom:28px">
+        <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(174,138,86,0.1);border:1px solid rgba(174,138,86,0.25);border-radius:8px;padding:5px 14px;margin-bottom:16px">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6.5H15L11.2 9.5L12.5 14L8 11.2L3.5 14L4.8 9.5L1 6.5H6L8 2Z" fill="#AE8A56"/></svg>
+          <span style="font-family:'DM Mono',monospace;font-size:10px;color:#AE8A56;letter-spacing:1.5px">ADMIN</span>
+        </div>
+        <div style="font-family:'League Spartan',sans-serif;font-size:22px;font-weight:700;color:#FCFCFC;margin-bottom:4px">Painel Admin</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.3)">Veross Scraper AI — Acesso restrito</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <input value="{{loginEmail}}" onChange="{{setEmail}}" onKeyDown="{{loginKey}}" type="email" placeholder="E-mail" style="background:#07091E;border:1px solid rgba(174,138,86,0.18);border-radius:8px;padding:11px 14px;color:#F0F0F8;font-size:13px;width:100%">
+        <input value="{{loginPwd}}" onChange="{{setPwd}}" onKeyDown="{{loginKey}}" type="password" placeholder="Senha" style="background:#07091E;border:1px solid rgba(174,138,86,0.18);border-radius:8px;padding:11px 14px;color:#F0F0F8;font-size:13px;width:100%">
+        <sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}">
+          <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:7px;padding:9px 12px;font-size:12px;color:#F87171">{{loginErr}}</div>
+        </sc-if>
+        <button onClick="{{doLogin}}" style="background:#AE8A56;border:none;border-radius:8px;padding:12px;font-family:'League Spartan',sans-serif;font-size:15px;font-weight:700;color:#050A1E;cursor:pointer;margin-top:4px;letter-spacing:0.5px">{{loginBtn}}</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- NEGADO -->
+<sc-if value="{{isDenied}}" hint-placeholder-val="{{false}}">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+    <div style="font-size:36px">🚫</div>
+    <div style="font-family:'League Spartan',sans-serif;font-size:20px;font-weight:700;color:#F87171">Sem permissão</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.35)">Este usuário não tem acesso admin.</div>
+    <button onClick="{{doLogout}}" style="margin-top:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:8px 20px;font-size:13px;color:#F87171;cursor:pointer">Sair</button>
+  </div>
+</sc-if>
+
+<!-- PAINEL -->
+<sc-if value="{{isApp}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;min-height:100vh;animation:fadeUp 0.25s ease">
+
+  <!-- TOPBAR -->
+  <div style="background:#0C1235;border-bottom:1px solid rgba(174,138,86,0.14);padding:0 28px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="display:flex;align-items:center;gap:6px;background:rgba(174,138,86,0.1);border:1px solid rgba(174,138,86,0.25);border-radius:6px;padding:4px 10px">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6.5H15L11.2 9.5L12.5 14L8 11.2L3.5 14L4.8 9.5L1 6.5H6L8 2Z" fill="#AE8A56"/></svg>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:#AE8A56;letter-spacing:1.5px">ADMIN</span>
+      </div>
+      <span style="font-family:'League Spartan',sans-serif;font-size:16px;font-weight:700;color:#FCFCFC">Veross Scraper AI</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="font-size:11px;color:rgba(255,255,255,0.3);font-family:'DM Mono',monospace">{{adminEmail}}</span>
+      <button onClick="{{doLogout}}" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,0.45);cursor:pointer">Sair</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div style="background:#0C1235;border-bottom:1px solid rgba(174,138,86,0.1);padding:0 28px;display:flex;align-items:center;flex-shrink:0">
+    <button onClick="{{goUsers}}" style="background:none;border:none;border-bottom:{{tabUB}};padding:12px 16px;font-size:13px;font-weight:600;color:{{tabUC}};cursor:pointer">Usuários ({{usersCount}})</button>
+    <button onClick="{{goRequests}}" style="background:none;border:none;border-bottom:{{tabRB}};padding:12px 16px;font-size:13px;font-weight:600;color:{{tabRC}};cursor:pointer">Solicitações ({{reqCount}})</button>
+    <button onClick="{{doRefresh}}" style="background:none;border:none;margin-left:auto;padding:12px 0;font-size:11px;color:rgba(174,138,86,0.5);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:1px">↺ ATUALIZAR</button>
+  </div>
+
+  <div style="flex:1;padding:24px 28px;overflow:auto">
+
+    <!-- TOAST -->
+    <sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}">
+      <div style="background:{{toastBg}};border:1px solid {{toastBd}};border-radius:8px;padding:10px 16px;margin-bottom:18px;font-size:13px;color:{{toastC}};display:flex;align-items:center;gap:8px;animation:fadeUp 0.2s ease">
+        {{toastIcon}} {{toastMsg}}
+      </div>
+    </sc-if>
+
+    <!-- TAB USUÁRIOS -->
+    <sc-if value="{{tabUsers}}" hint-placeholder-val="{{true}}">
+    <div style="animation:fadeUp 0.2s ease">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+        <div>
+          <div style="font-family:'League Spartan',sans-serif;font-size:18px;font-weight:700;color:#FCFCFC">Gerenciar Usuários</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px">Adicione ou remova créditos de cada conta</div>
+        </div>
+        <input value="{{userSearch}}" onChange="{{setUserSearch}}" placeholder="Buscar por nome ou e-mail..." style="background:#0C1235;border:1px solid rgba(174,138,86,0.18);border-radius:8px;padding:8px 14px;color:#F0F0F8;font-size:12px;width:240px">
+      </div>
+      <div style="background:#0C1235;border:1px solid rgba(174,138,86,0.12);border-radius:12px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:2fr 130px 90px 80px 160px 130px;padding:10px 18px;background:rgba(7,9,30,0.9);border-bottom:1px solid rgba(174,138,86,0.1)">
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase">Usuário</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase">Empresa</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:right">Créditos</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:center">Admin</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:center">Qtd. a ajustar</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:center">Ações</span>
+        </div>
+        <sc-if value="{{usersEmpty}}" hint-placeholder-val="{{false}}">
+          <div style="padding:40px;text-align:center;color:rgba(255,255,255,0.2);font-size:13px">Nenhum usuário encontrado.</div>
+        </sc-if>
+        <sc-for list="{{userRows}}" as="u" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:2fr 130px 90px 80px 160px 130px;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center" style-hover="background:rgba(174,138,86,0.03)">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#F0F0F8">{{u.name}}</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.3);font-family:'DM Mono',monospace;margin-top:2px">{{u.email}}</div>
+            </div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.45)">{{u.company}}</div>
+            <div style="font-size:15px;font-weight:700;color:#AE8A56;text-align:right;font-family:'DM Mono',monospace">{{u.credits}}</div>
+            <div style="text-align:center"><span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;background:{{u.adminBg}};color:{{u.adminC}}">{{u.adminLabel}}</span></div>
+            <div style="display:flex;align-items:center;justify-content:center">
+              <input value="{{u.inputVal}}" onChange="{{u.setInput}}" type="number" placeholder="100" min="1" style="background:#07091E;border:1px solid rgba(174,138,86,0.18);border-radius:6px;padding:6px 8px;color:#F0F0F8;font-size:12px;width:80px;text-align:center;font-family:'DM Mono',monospace">
+            </div>
+            <div style="display:flex;gap:6px;justify-content:center">
+              <button onClick="{{u.add}}" style="background:rgba(22,163,74,0.12);border:1px solid rgba(22,163,74,0.3);border-radius:6px;padding:5px 11px;font-size:11px;font-weight:700;color:#4ADE80;cursor:pointer">+ADD</button>
+              <button onClick="{{u.rem}}" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:6px;padding:5px 11px;font-size:11px;font-weight:700;color:#F87171;cursor:pointer">−REM</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- TAB SOLICITAÇÕES -->
+    <sc-if value="{{tabRequests}}" hint-placeholder-val="{{false}}">
+    <div style="animation:fadeUp 0.2s ease">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+        <div>
+          <div style="font-family:'League Spartan',sans-serif;font-size:18px;font-weight:700;color:#FCFCFC">Todas as Solicitações</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px">Atualize status e entregue arquivos</div>
+        </div>
+        <select value="{{filterStatus}}" onChange="{{setFilter}}" style="background:#0C1235;border:1px solid rgba(174,138,86,0.18);border-radius:8px;padding:8px 14px;color:#F0F0F8;font-size:12px">
+          <option value="">Todos os status</option>
+          <option value="processing">Processando</option>
+          <option value="queued">Em fila</option>
+          <option value="scraping">Extraindo</option>
+          <option value="completed">Concluído</option>
+          <option value="error">Erro</option>
+        </select>
+      </div>
+      <div style="background:#0C1235;border:1px solid rgba(174,138,86,0.12);border-radius:12px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:2fr 160px 110px 70px 70px 70px 110px;padding:10px 18px;background:rgba(7,9,30,0.9);border-bottom:1px solid rgba(174,138,86,0.1)">
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase">Solicitação</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase">Usuário</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:center">Status</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:right">Req.</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:right">Ext.</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:right">Cred.</span>
+          <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:center">Ações</span>
+        </div>
+        <sc-if value="{{reqEmpty}}" hint-placeholder-val="{{false}}">
+          <div style="padding:40px;text-align:center;color:rgba(255,255,255,0.2);font-size:13px">Nenhuma solicitação.</div>
+        </sc-if>
+        <sc-for list="{{reqRows}}" as="r" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:2fr 160px 110px 70px 70px 70px 110px;padding:11px 18px;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center" style-hover="background:rgba(174,138,86,0.03)">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#F0F0F8">{{r.name}}</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.28);font-family:'DM Mono',monospace;margin-top:2px">{{r.date}}</div>
+            </div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.45);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{r.userEmail}}</div>
+            <div style="text-align:center"><span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:{{r.stBg}};color:{{r.stC}}">{{r.stLabel}}</span></div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);text-align:right;font-family:'DM Mono',monospace">{{r.qty}}</div>
+            <div style="font-size:12px;color:{{r.extC}};text-align:right;font-family:'DM Mono',monospace">{{r.ext}}</div>
+            <div style="font-size:12px;color:#AE8A56;text-align:right;font-family:'DM Mono',monospace">{{r.cred}}</div>
+            <div style="display:flex;gap:5px;justify-content:center">
+              <button onClick="{{r.openEdit}}" style="background:rgba(174,138,86,0.1);border:1px solid rgba(174,138,86,0.25);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;color:#AE8A56;cursor:pointer">Editar</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+</div>
+
+<!-- MODAL EDITAR SOLICITAÇÃO -->
+<sc-if value="{{showEditModal}}" hint-placeholder-val="{{false}}">
+  <div onClick="{{closeModal}}" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:100;padding:24px">
+    <div onClick="{{stopProp}}" style="background:#0C1235;border:1px solid rgba(174,138,86,0.25);border-radius:16px;width:100%;max-width:480px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.6);animation:fadeUp 0.25s ease">
+      <div style="font-family:'League Spartan',sans-serif;font-size:17px;font-weight:700;color:#FCFCFC;margin-bottom:6px">Editar Solicitação</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:22px;font-family:'DM Mono',monospace">{{editName}}</div>
+      <div style="display:flex;flex-direction:column;gap:13px">
+        <div>
+          <div style="font-size:11px;font-weight:600;color:rgba(174,138,86,0.7);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Status</div>
+          <select value="{{editStatus}}" onChange="{{setEditStatus}}" style="background:#07091E;border:1px solid rgba(174,138,86,0.2);border-radius:8px;padding:10px 14px;color:#F0F0F8;font-size:13px;width:100%">
+            <option value="processing">Processando</option>
+            <option value="queued">Em fila</option>
+            <option value="scraping">Extraindo</option>
+            <option value="completed">Concluído</option>
+            <option value="error">Erro</option>
+          </select>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:rgba(174,138,86,0.7);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">URL do Arquivo</div>
+          <input value="{{editFileUrl}}" onChange="{{setEditFileUrl}}" placeholder="https://drive.google.com/..." style="background:#07091E;border:1px solid rgba(174,138,86,0.2);border-radius:8px;padding:10px 14px;color:#F0F0F8;font-size:13px;width:100%">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <div style="font-size:11px;font-weight:600;color:rgba(174,138,86,0.7);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Qtd. Extraída</div>
+            <input value="{{editExtQty}}" onChange="{{setEditExtQty}}" type="number" placeholder="0" style="background:#07091E;border:1px solid rgba(174,138,86,0.2);border-radius:8px;padding:10px 14px;color:#F0F0F8;font-size:13px;width:100%;font-family:'DM Mono',monospace">
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;color:rgba(174,138,86,0.7);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Créditos Usados</div>
+            <input value="{{editCredits}}" onChange="{{setEditCredits}}" type="number" placeholder="0" style="background:#07091E;border:1px solid rgba(174,138,86,0.2);border-radius:8px;padding:10px 14px;color:#F0F0F8;font-size:13px;width:100%;font-family:'DM Mono',monospace">
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <button onClick="{{closeModal}}" style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);cursor:pointer">Cancelar</button>
+          <button onClick="{{saveEdit}}" style="flex:2;background:#AE8A56;border:none;border-radius:8px;padding:11px;font-family:'League Spartan',sans-serif;font-size:15px;font-weight:700;color:#050A1E;cursor:pointer">{{saveEditBtn}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SUPABASE_URL      = 'https://itpoitqoeeqggetrfkro.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_VrBvEiKk5eZBR2RAysI4YA_HHwR8Pjp';
+
+let _sb = null;
+function getSB() {
+  if (_sb) return _sb;
+  if (!window.supabase) return null;
+  _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  return _sb;
+}
+
+function fmt(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('pt-BR', {day:'2-digit',month:'short',year:'numeric'});
+}
+
+const STATUS_MAP = {
+  processing: {label:'Processando', bg:'rgba(59,130,246,0.15)', c:'#60A5FA'},
+  queued:     {label:'Em fila',     bg:'rgba(217,119,6,0.15)',  c:'#FCD34D'},
+  scraping:   {label:'Extraindo',   bg:'rgba(139,92,246,0.15)', c:'#A78BFA'},
+  completed:  {label:'Concluído',   bg:'rgba(22,163,74,0.15)',  c:'#4ADE80'},
+  error:      {label:'Erro',        bg:'rgba(239,68,68,0.15)',  c:'#F87171'},
+};
+
+class Component extends DCLogic {
+  _m = false;
+  _authSub = null;
+
+  state = {
+    view: 'checking',
+    loginEmail: '', loginPwd: '', loginErr: '', loading: false,
+    adminEmail: '',
+    tab: 'users',
+    users: [], userInputs: {}, userSearch: '',
+    requests: [], filterStatus: '',
+    toast: null,
+    editReq: null, editStatus: '', editFileUrl: '', editExtQty: '', editCredits: '', saving: false,
+  };
+
+  async componentDidMount() {
+    this._m = true;
+    const sb = getSB();
+    if (!sb) { this.setState({view:'login'}); return; }
+    const {data:{subscription}} = sb.auth.onAuthStateChange((e, session) => this._onAuth(e, session));
+    this._authSub = subscription;
+    setTimeout(() => { if (this._m && this.state.view === 'checking') this.setState({view:'login'}); }, 5000);
+  }
+
+  componentWillUnmount() {
+    this._m = false;
+    if (this._authSub) this._authSub.unsubscribe();
+  }
+
+  async _onAuth(event, session) {
+    if (!this._m) return;
+    console.log('[admin _onAuth]', event, !!session?.user);
+    if (event === 'INITIAL_SESSION') {
+      if (session?.user) {
+        await this._checkAdmin(session.user);
+      } else {
+        this.setState({view:'login'});
+      }
+    }
+    // SIGNED_IN é tratado apenas pelo doLogin para evitar corrida dupla
+    else if (event === 'SIGNED_OUT') {
+      if (this._m) this.setState({view:'login', adminEmail:'', loading:false});
+    }
+  }
+
+  async _checkAdmin(user) {
+    const sb = getSB();
+    if (!sb) { if (this._m) this.setState({loading:false, loginErr:'Supabase não configurado.'}); return; }
+    try {
+      const {data, error} = await sb.from('profiles').select('is_admin').eq('id', user.id).maybeSingle();
+      if (!this._m) return;
+      if (error) console.warn('[_checkAdmin]', error.message);
+      if (data?.is_admin) {
+        this.setState({view:'app', adminEmail: user.email, loading:false});
+        this.loadAll();
+      } else {
+        this.setState({view:'denied', loading:false});
+      }
+    } catch(e) {
+      console.error('[_checkAdmin]', e);
+      if (this._m) this.setState({loading:false, loginErr:'Erro ao verificar permissões.'});
+    }
+  }
+
+  async doLogin() {
+    const {loginEmail, loginPwd} = this.state;
+    if (!loginEmail || !loginPwd) return this.setState({loginErr:'Preencha e-mail e senha.'});
+    this.setState({loading:true, loginErr:''});
+
+    // Timeout de segurança — nunca trava mais que 15s
+    const safetyTimer = setTimeout(() => {
+      if (this._m && this.state.loading) {
+        this.setState({loading:false, loginErr:'Tempo esgotado. Verifique sua conexão.'});
+      }
+    }, 15000);
+
+    try {
+      // Aguarda Supabase JS carregar (até 5s)
+      let sb = getSB();
+      if (!sb) {
+        await new Promise(res => setTimeout(res, 2000));
+        sb = getSB();
+      }
+      if (!sb) {
+        clearTimeout(safetyTimer);
+        return this.setState({loading:false, loginErr:'Supabase não carregou. Recarregue a página.'});
+      }
+
+      console.log('[admin doLogin] chamando signInWithPassword...');
+      const {data, error} = await sb.auth.signInWithPassword({
+        email: loginEmail.trim().toLowerCase(),
+        password: loginPwd,
+      });
+      clearTimeout(safetyTimer);
+      if (!this._m) return;
+
+      console.log('[admin doLogin] result:', !!data?.user, error?.message);
+      if (error) { this.setState({loading:false, loginErr:'E-mail ou senha incorretos.'}); return; }
+
+      let u = data?.user || data?.session?.user;
+      if (!u) {
+        const {data:sd} = await sb.auth.getSession();
+        u = sd?.session?.user;
+      }
+      if (!u) {
+        const {data:ud} = await sb.auth.getUser();
+        u = ud?.user;
+      }
+
+      if (u && this._m) {
+        await this._checkAdmin(u);
+      } else if (this._m) {
+        this.setState({loading:false, loginErr:'Sessão não encontrada. Tente novamente.'});
+      }
+    } catch(e) {
+      clearTimeout(safetyTimer);
+      console.error('[admin doLogin error]', e);
+      if (this._m) this.setState({loading:false, loginErr: e.message || 'Erro inesperado.'});
+    }
+  }
+
+  async doLogout() {
+    const sb = getSB(); if (!sb) return;
+    await sb.auth.signOut();
+    if (this._m) this.setState({view:'login', adminEmail:'', users:[], requests:[]});
+  }
+
+  async loadAll() {
+    const sb = getSB(); if (!sb) return;
+    const [uRes, rRes] = await Promise.all([
+      sb.rpc('admin_get_users'),
+      sb.from('scraping_requests')
+        .select('id, user_id, display_name, status, requested_qty, extracted_qty, credits_used, file_url, created_at')
+        .order('created_at', {ascending:false}),
+    ]);
+    if (!this._m) return;
+    const upd = {};
+    if (uRes.data) upd.users = uRes.data;
+    else if (uRes.error) console.warn('[admin_get_users]', uRes.error.message);
+    if (rRes.data) upd.requests = rRes.data;
+    else if (rRes.error) console.warn('[requests]', rRes.error.message);
+    this.setState(upd);
+  }
+
+  async adjustCredits(userId, amount) {
+    const sb = getSB(); if (!sb) return;
+    const user = this.state.users.find(u => u.id === userId);
+    if (!user) return;
+    const newCredits = Math.max(0, (user.credits || 0) + amount);
+    const {error} = await sb.from('profiles').update({credits: newCredits}).eq('id', userId);
+    if (!this._m) return;
+    if (error) {
+      this.showToast('error', '✕ Erro ao ajustar créditos: ' + error.message);
+    } else {
+      const users = this.state.users.map(u => u.id === userId ? {...u, credits: newCredits} : u);
+      this.setState({users, userInputs: {...this.state.userInputs, [userId]: ''}});
+      this.showToast('success', `✓ Créditos atualizados: ${newCredits} créditos`);
+    }
+  }
+
+  showToast(type, msg) {
+    this.setState({toast:{type, msg}});
+    setTimeout(() => { if (this._m) this.setState({toast:null}); }, 3500);
+  }
+
+  async saveEdit() {
+    const {editReq, editStatus, editFileUrl, editExtQty, editCredits} = this.state;
+    if (!editReq) return;
+    this.setState({saving:true});
+    const sb = getSB(); if (!sb) return;
+    const patch = {
+      status: editStatus,
+      file_url: editFileUrl || null,
+      extracted_qty: editExtQty ? parseInt(editExtQty) : null,
+      credits_used: editCredits ? parseInt(editCredits) : null,
+    };
+    if (editStatus === 'completed' && !patch.completed_at) patch.completed_at = new Date().toISOString();
+    const {error} = await sb.from('scraping_requests').update(patch).eq('id', editReq.id);
+    if (!this._m) return;
+    if (error) {
+      this.showToast('error', '✕ Erro ao salvar: ' + error.message);
+    } else {
+      const requests = this.state.requests.map(r => r.id === editReq.id ? {...r, ...patch} : r);
+      this.setState({requests, editReq:null, saving:false});
+      this.showToast('success', '✓ Solicitação atualizada com sucesso.');
+    }
+    this.setState({saving:false});
+  }
+
+  renderVals() {
+    const s = this.state;
+    const isChecking = s.view === 'checking';
+    const isLogin    = s.view === 'login';
+    const isDenied   = s.view === 'denied';
+    const isApp      = s.view === 'app';
+    const tabUsers    = s.tab === 'users';
+    const tabRequests = s.tab === 'requests';
+
+    // Toast
+    const t = s.toast;
+    const hasToast = !!t;
+    const toastBg = t?.type === 'success' ? 'rgba(22,163,74,0.12)' : 'rgba(239,68,68,0.1)';
+    const toastBd = t?.type === 'success' ? 'rgba(22,163,74,0.3)'  : 'rgba(239,68,68,0.25)';
+    const toastC  = t?.type === 'success' ? '#4ADE80' : '#F87171';
+    const toastIcon = t?.type === 'success' ? '✓' : '✕';
+    const toastMsg  = t?.msg || '';
+
+    // Users
+    const sq = s.userSearch.toLowerCase();
+    const filteredUsers = sq
+      ? s.users.filter(u => (u.first_name+' '+u.last_name+u.company).toLowerCase().includes(sq) || false)
+      : s.users;
+    const usersEmpty = filteredUsers.length === 0;
+    const usersCount = String(s.users.length);
+
+    const userRows = filteredUsers.map(u => {
+      const uid = u.id;
+      const inputVal = s.userInputs[uid] || '';
+      const amt = parseInt(inputVal) || 0;
+      return {
+        name: ((u.first_name || '') + ' ' + (u.last_name || '')).trim() || '—',
+        email: u.email || uid,
+        company: u.company || '—',
+        credits: String(u.credits || 0),
+        adminLabel: u.is_admin ? 'Sim' : 'Não',
+        adminBg: u.is_admin ? 'rgba(174,138,86,0.15)' : 'rgba(255,255,255,0.06)',
+        adminC:  u.is_admin ? '#AE8A56' : 'rgba(255,255,255,0.3)',
+        inputVal,
+        setInput: (e) => this.setState(st => ({userInputs: {...st.userInputs, [uid]: e.target.value}})),
+        add: () => amt > 0 && this.adjustCredits(uid, amt),
+        rem: () => amt > 0 && this.adjustCredits(uid, -amt),
+      };
+    });
+
+    // Requests
+    const filtered = s.filterStatus
+      ? s.requests.filter(r => r.status === s.filterStatus)
+      : s.requests;
+    const reqEmpty = filtered.length === 0;
+    const reqCount = String(s.requests.length);
+
+    const reqRows = filtered.map(r => {
+      const st = STATUS_MAP[r.status] || STATUS_MAP.queued;
+      return {
+        name: r.display_name || r.id,
+        date: fmt(r.created_at),
+        userEmail: r.user_id,
+        stLabel: st.label, stBg: st.bg, stC: st.c,
+        qty:  String(r.requested_qty || '—'),
+        ext:  r.extracted_qty != null ? String(r.extracted_qty) : '—',
+        cred: r.credits_used  != null ? String(r.credits_used)  : '—',
+        extC: r.extracted_qty != null ? '#4ADE80' : 'rgba(255,255,255,0.3)',
+        openEdit: () => this.setState({
+          editReq: r,
+          editStatus: r.status,
+          editFileUrl: r.file_url || '',
+          editExtQty: r.extracted_qty != null ? String(r.extracted_qty) : '',
+          editCredits: r.credits_used != null ? String(r.credits_used) : '',
+        }),
+      };
+    });
+
+    const showEditModal = !!s.editReq;
+
+    return {
+      isChecking, isLogin, isDenied, isApp,
+      tabUsers, tabRequests,
+      hasErr: !!s.loginErr, loginErr: s.loginErr,
+      loginBtn: s.loading ? 'Entrando...' : 'ENTRAR',
+      loginEmail: s.loginEmail, loginPwd: s.loginPwd,
+      adminEmail: s.adminEmail,
+      tabUB: tabUsers ? '2px solid #AE8A56' : '2px solid transparent',
+      tabUC: tabUsers ? '#AE8A56' : 'rgba(255,255,255,0.4)',
+      tabRB: tabRequests ? '2px solid #AE8A56' : '2px solid transparent',
+      tabRC: tabRequests ? '#AE8A56' : 'rgba(255,255,255,0.4)',
+      usersCount, usersEmpty, userRows, userSearch: s.userSearch,
+      reqCount, reqEmpty, reqRows, filterStatus: s.filterStatus,
+      hasToast, toastBg, toastBd, toastC, toastIcon, toastMsg,
+      showEditModal,
+      editName: s.editReq?.display_name || '',
+      editStatus: s.editStatus,
+      editFileUrl: s.editFileUrl,
+      editExtQty: s.editExtQty,
+      editCredits: s.editCredits,
+      saveEditBtn: s.saving ? 'Salvando...' : 'Salvar alterações',
+      // handlers
+      setEmail: (e) => this.setState({loginEmail: e.target.value}),
+      setPwd:   (e) => this.setState({loginPwd: e.target.value}),
+      loginKey: (e) => { if (e.key === 'Enter') this.doLogin(); },
+      doLogin:  () => this.doLogin(),
+      doLogout: () => this.doLogout(),
+      goUsers:    () => this.setState({tab:'users'}),
+      goRequests: () => this.setState({tab:'requests'}),
+      doRefresh:  () => this.loadAll(),
+      setUserSearch: (e) => this.setState({userSearch: e.target.value}),
+      setFilter: (e) => this.setState({filterStatus: e.target.value}),
+      closeModal: () => this.setState({editReq:null}),
+      stopProp: (e) => e.stopPropagation(),
+      setEditStatus:  (e) => this.setState({editStatus:  e.target.value}),
+      setEditFileUrl: (e) => this.setState({editFileUrl: e.target.value}),
+      setEditExtQty:  (e) => this.setState({editExtQty:  e.target.value}),
+      setEditCredits: (e) => this.setState({editCredits: e.target.value}),
+      saveEdit: () => this.saveEdit(),
+    };
+  }
+}
+</script>
+</body>
+</html>

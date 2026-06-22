@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veross — Branding Book 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #060923;
+  --dourado: #AE8A56;
+  --amendoa: #ECD7B4;
+  --platina: #CDCDD0;
+  --branco: #FCFCFC;
+  --preto: #0A0A0A;
+  --azul-mid: #0D1540;
+  --dourado-light: #C9A97A;
+  --sidebar-w: 280px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--branco);
+  color: var(--preto);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+#sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--azul);
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(174,138,86,0.2);
+}
+
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-track { background: var(--azul); }
+#sidebar::-webkit-scrollbar-thumb { background: var(--dourado); border-radius: 2px; }
+
+.sidebar-logo {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(174,138,86,0.2);
+}
+
+.sidebar-logo .brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 4px;
+  color: var(--branco);
+  display: block;
+  line-height: 1;
+}
+
+.sidebar-logo .sub {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--dourado);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 4px;
+}
+
+.sidebar-search {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(174,138,86,0.1);
+}
+
+.sidebar-search input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(174,138,86,0.2);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--branco);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.sidebar-search input::placeholder { color: rgba(255,255,255,0.3); }
+.sidebar-search input:focus { border-color: var(--dourado); }
+
+nav { padding: 16px 0; flex: 1; }
+
+.nav-section-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(174,138,86,0.6);
+  padding: 16px 24px 6px;
+  font-weight: 500;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 24px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.2s;
+  border-left: 2px solid transparent;
+}
+
+nav a:hover {
+  color: var(--branco);
+  background: rgba(174,138,86,0.08);
+  border-left-color: var(--dourado);
+}
+
+nav a.active {
+  color: var(--dourado);
+  background: rgba(174,138,86,0.12);
+  border-left-color: var(--dourado);
+  font-weight: 500;
+}
+
+nav a .num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--dourado);
+  opacity: 0.7;
+  min-width: 20px;
+}
+
+.sidebar-footer {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(174,138,86,0.2);
+}
+
+.sidebar-footer p {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.6;
+}
+
+/* ── MAIN ── */
+main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+}
+
+/* ── COVER ── */
+#cover {
+  background: var(--azul);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+#cover::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(174,138,86,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#cover::after {
+  content: 'V';
+  position: absolute;
+  bottom: -80px; right: -20px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 600px;
+  color: rgba(174,138,86,0.04);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cover-tag {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--dourado);
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.cover-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(72px, 10vw, 120px);
+  color: var(--branco);
+  letter-spacing: 6px;
+  line-height: 0.9;
+  margin-bottom: 8px;
+}
+
+.cover-subtitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--dourado);
+  letter-spacing: 8px;
+  margin-bottom: 48px;
+}
+
+.cover-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.5);
+  max-width: 480px;
+  line-height: 1.7;
+  font-style: italic;
+  border-left: 2px solid var(--dourado);
+  padding-left: 20px;
+  margin-bottom: 64px;
+}
+
+.cover-meta {
+  display: flex;
+  gap: 48px;
+}
+
+.cover-meta-item .label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(174,138,86,0.6);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.cover-meta-item .value {
+  font-size: 14px;
+  color: var(--branco);
+  font-weight: 500;
+}
+
+/* ── CONTENT ── */
+.content-area {
+  padding: 80px;
+  max-width: 860px;
+}
+
+/* ── SECTION ── */
+.section {
+  margin-bottom: 96px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(174,138,86,0.2);
+}
+
+.section-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  color: var(--dourado);
+  opacity: 0.3;
+  line-height: 1;
+  min-width: 64px;
+}
+
+.section-titles { flex: 1; }
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--dourado);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: var(--azul);
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+/* ── PROSE ── */
+p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #2A2A2A;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+/* ── QUOTE ── */
+.quote {
+  border-left: 3px solid var(--dourado);
+  padding: 20px 28px;
+  margin: 32px 0;
+  background: rgba(174,138,86,0.04);
+  border-radius: 0 8px 8px 0;
+}
+
+.quote p {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--azul);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── FIELD LABEL ── */
+.field-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--dourado);
+  font-weight: 600;
+  margin: 32px 0 8px;
+}
+
+/* ── TABLE ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 14px;
+}
+
+.data-table th {
+  background: var(--azul);
+  color: var(--dourado);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  color: #2A2A2A;
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.data-table tr:hover td { background: rgba(174,138,86,0.04); }
+
+.data-table td:first-child {
+  font-weight: 600;
+  color: var(--azul);
+  white-space: nowrap;
+  min-width: 160px;
+}
+
+/* ── VALUES GRID ── */
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.value-card {
+  background: var(--azul);
+  border-radius: 12px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.value-card:hover { transform: translateY(-2px); }
+
+.value-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, rgba(174,138,86,0.15) 0%, transparent 70%);
+}
+
+.value-card .v-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: var(--dourado);
+  margin-bottom: 8px;
+}
+
+.value-card .v-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.value-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+/* ── COLOR SWATCHES ── */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.color-swatch {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.swatch-color {
+  height: 80px;
+  width: 100%;
+}
+
+.swatch-info {
+  padding: 12px;
+  background: white;
+}
+
+.swatch-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--azul);
+  margin-bottom: 2px;
+}
+
+.swatch-hex {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(0,0,0,0.4);
+}
+
+/* ── PITCH CARDS ── */
+.pitch-card {
+  border: 1px solid rgba(174,138,86,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 16px 0;
+  transition: border-color 0.2s;
+}
+
+.pitch-card:hover { border-color: var(--dourado); }
+
+.pitch-header {
+  background: var(--azul);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pitch-header .pitch-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dourado);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.pitch-header .pitch-context {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+.pitch-body {
+  padding: 20px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #2A2A2A;
+  font-style: italic;
+  display: none;
+}
+
+.pitch-body.open { display: block; }
+
+/* ── BULLETS ── */
+ul.brand-list {
+  list-style: none;
+  margin: 16px 0;
+}
+
+ul.brand-list li {
+  padding: 8px 0 8px 20px;
+  position: relative;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #2A2A2A;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  font-weight: 300;
+}
+
+ul.brand-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--dourado);
+  font-weight: 600;
+}
+
+/* ── NOTA ── */
+.nota {
+  background: rgba(236,215,180,0.2);
+  border: 1px solid rgba(174,138,86,0.2);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: #5A4A30;
+  line-height: 1.6;
+}
+
+.nota::before {
+  content: 'Nota  ';
+  font-weight: 700;
+  color: var(--dourado);
+  letter-spacing: 1px;
+}
+
+/* ── TAGS ── */
+.hashtag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.hashtag {
+  background: var(--azul);
+  color: var(--dourado);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+}
+
+/* ── FRASES ── */
+.frase-card {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-mid) 100%);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 12px 0;
+  border-left: 3px solid var(--dourado);
+}
+
+.frase-card p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  font-style: italic;
+  margin: 0;
+  line-height: 1.7;
+}
+
+/* ── CANAL TABLE ── */
+.canal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 13px;
+}
+
+.canal-table th {
+  background: var(--azul);
+  color: var(--dourado);
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.canal-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+.canal-table td:first-child { font-weight: 600; color: var(--azul); white-space: nowrap; }
+.canal-table td:nth-child(2) { color: var(--dourado); font-size: 12px; }
+.canal-table td:last-child { color: #3A3A3A; font-style: italic; }
+.canal-table tr:hover td { background: rgba(174,138,86,0.04); }
+
+/* ── PILAR CARDS ── */
+.pilar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.pilar-card {
+  border: 1px solid rgba(174,138,86,0.2);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.2s;
+}
+
+.pilar-card:hover {
+  border-color: var(--dourado);
+  background: rgba(174,138,86,0.03);
+}
+
+.pilar-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  color: var(--dourado);
+  opacity: 0.3;
+  line-height: 1;
+}
+
+.pilar-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--azul);
+  margin: 4px 0 8px;
+}
+
+.pilar-desc {
+  font-size: 13px;
+  color: #5A5A5A;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── TIPO TABLE ── */
+.tipo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.tipo-card {
+  background: var(--azul);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.tipo-font {
+  font-size: 36px;
+  color: var(--branco);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.tipo-name {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dourado);
+  margin-bottom: 4px;
+}
+
+.tipo-use {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── ENCERRAMENTO ── */
+#encerramento {
+  background: var(--azul);
+  padding: 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#encerramento::before {
+  content: 'V';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 500px;
+  color: rgba(174,138,86,0.04);
+  pointer-events: none;
+  user-select: none;
+}
+
+#encerramento h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px;
+  letter-spacing: 4px;
+  color: var(--dourado);
+  position: relative;
+}
+
+#encerramento p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 8px;
+  position: relative;
+}
+
+/* ── PROGRESS BAR ── */
+#progress {
+  position: fixed;
+  top: 0; left: var(--sidebar-w);
+  right: 0;
+  height: 2px;
+  background: var(--dourado);
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 200;
+  transition: transform 0.1s;
+}
+
+/* ── PRINT ── */
+@media print {
+  #sidebar, #progress { display: none; }
+  main { margin-left: 0; }
+  .section { opacity: 1; transform: none; }
+}
+
+/* ── SCROLL BAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--branco); }
+::-webkit-scrollbar-thumb { background: var(--dourado); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <span class="brand">VEROSS</span>
+    <span class="sub">Branding Book 2026</span>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" id="search" placeholder="Buscar no documento..." autocomplete="off">
+  </div>
+  <nav id="nav">
+    <div class="nav-section-label">Fundamentos</div>
+    <a href="#proposito"><span class="num">01</span> Propósito</a>
+    <a href="#visao"><span class="num">02</span> Visão</a>
+    <a href="#missao"><span class="num">03</span> Missão</a>
+    <a href="#valores"><span class="num">04</span> Valores</a>
+    <a href="#posicionamento"><span class="num">05</span> Posicionamento</a>
+    <a href="#promessa"><span class="num">06</span> Promessa de Marca</a>
+    <div class="nav-section-label">Identidade</div>
+    <a href="#verbal"><span class="num">07</span> Identidade Verbal</a>
+    <a href="#mensagens"><span class="num">08</span> Mensagens-Chave</a>
+    <div class="nav-section-label">Estrutura</div>
+    <a href="#arquitetura"><span class="num">09</span> Arquitetura de Marca</a>
+    <a href="#visual"><span class="num">10</span> Identidade Visual</a>
+    <div class="nav-section-label">Aplicação</div>
+    <a href="#aplicacoes"><span class="num">11</span> Aplicações Práticas</a>
+    <a href="#terceiros"><span class="num">12</span> Diretrizes p/ Terceiros</a>
+  </nav>
+  <div class="sidebar-footer">
+    <p>Documento Confidencial<br>Uso Interno e Parceiros Autorizados<br>veross.com.br</p>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main>
+
+<!-- CAPA -->
+<section id="cover">
+  <div class="cover-tag">Identidade · Voz · Diretrizes</div>
+  <div class="cover-title">VEROSS</div>
+  <div class="cover-subtitle">BRANDING BOOK</div>
+  <p class="cover-desc">Arquitetura. Sua palavra. Seu território. O documento que define como a Veross existe no mundo.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="label">Versão</span>
+      <span class="value">Maio 2026</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Guardião</span>
+      <span class="value">Lucas Silvestre — CEO</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Acesso</span>
+      <span class="value">Interno & Parceiros</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEÚDO -->
+<div class="content-area">
+
+<!-- 01 PROPÓSITO -->
+<div class="section" id="proposito">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-titles">
+      <div class="section-label">Fundamentos da Marca</div>
+      <div class="section-title">PROPÓSITO</div>
+    </div>
+  </div>
+  <p>O mercado brasileiro está cheio de empresas que vendem por acidente. Sem estrutura, sem processo, sem rotina — dependendo do esforço individual do vendedor para manter as receitas vivas. Contratam mais gente, compram mais leads, aumentam comissão. E mesmo assim continuam presas numa montanha-russa comercial, refazendo tudo a cada novo ciclo.</p>
+  <p>A Veross existe porque esse padrão tem solução — e ela não está em trabalhar mais. Está em estruturar melhor.</p>
+  <p>Acreditamos que a transformação comercial começa por dentro: nas pessoas, na mentalidade, no método. E se expande para o negócio. Não entregamos apenas resultado: entregamos clareza sobre o que gerou esse resultado, para que ele possa ser replicado, evoluído e sustentado ao longo do tempo.</p>
+  <p>É assim que trabalhamos — com curiosidade, com método, com muita mão na massa. Onde teoria e prática dão as mãos e geram resultado acima da média.</p>
+  <div class="quote"><p>Porque vender mais resolve o mês. Estruturar como vender melhor é o que sustenta uma empresa de verdade.</p></div>
+</div>
+
+<!-- 02 VISÃO -->
+<div class="section" id="visao">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-titles">
+      <div class="section-label">Fundamentos da Marca</div>
+      <div class="section-title">VISÃO</div>
+    </div>
+  </div>
+  <p>Queremos viver num mercado onde empresas B2B não dependem do improviso para crescer — onde operações comerciais bem estruturadas são a regra, não a exceção.</p>
+  <p>A Veross quer ser a referência mundial em arquitetura e estruturação de ecossistemas comerciais B2B. A Harvard das vendas e dos negócios — não pelo prestígio, mas pelo padrão: pelo rigor do método, pela profundidade da transformação e pela longevidade do impacto gerado.</p>
+  <p>Mais do que empresas que vendem melhor, queremos formar e inspirar pessoas melhores. Porque o impacto de uma operação bem estruturada não fica dentro de uma empresa. Ele ramifica. Chega nos times, nos clientes, nas famílias, nas comunidades. Como um efeito borboleta que começa numa decisão comercial e permeia cada microecossistema que aquela pessoa toca.</p>
+  <div class="quote"><p>É esse o mundo que a Veross está construindo — um deal de cada vez.</p></div>
+</div>
+
+<!-- 03 MISSÃO -->
+<div class="section" id="missao">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-titles">
+      <div class="section-label">Fundamentos da Marca</div>
+      <div class="section-title">MISSÃO</div>
+    </div>
+  </div>
+  <div class="quote"><p>Expandir mentes e elevar o nível das vendas B2B, estruturando ecossistemas comerciais que integram desenvolvimento humano, método e tecnologia — para que empresas cresçam com Receita, Recorrência, Rentabilidade e Replicabilidade.</p></div>
+</div>
+
+<!-- 04 VALORES -->
+<div class="section" id="valores">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-titles">
+      <div class="section-label">Fundamentos da Marca</div>
+      <div class="section-title">O JEITO VEROSS DE SER</div>
+    </div>
+  </div>
+  <p>Cinco valores. Uma mão. Uma marca. São os princípios inegociáveis que guiam como a Veross age.</p>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="v-name">Mentalidade de Expansão</div>
+      <div class="v-desc">Somos curiosos por natureza, inquietos e temos ousadia para errar.</div>
+    </div>
+    <div class="value-card">
+      <div class="v-name">Foco no Resultado</div>
+      <div class="v-desc">Nossas ações e soluções priorizam o resultado.</div>
+    </div>
+    <div class="value-card">
+      <div class="v-name">Consistência e Persistência</div>
+      <div class="v-desc">Fazemos o que precisa ser feito todo santo dia.</div>
+    </div>
+    <div class="value-card">
+      <div class="v-name">Comece por Você</div>
+      <div class="v-desc">Temos um sonho grande e protagonismo para ter autorresponsabilidade e autogerenciamento.</div>
+    </div>
+    <div class="value-card">
+      <div class="v-name">Gente Cresce com Gente</div>
+      <div class="v-desc">Temos sede por aprender e ensinar o que aprendemos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 POSICIONAMENTO -->
+<div class="section" id="posicionamento">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-titles">
+      <div class="section-label">Fundamentos da Marca</div>
+      <div class="section-title">POSICIONAMENTO</div>
+    </div>
+  </div>
+  <div class="field-label">Palavra de Marca</div>
+  <div class="quote"><p>Arquitetura.</p></div>
+  <p>Uma palavra que ocupa território mental instantâneo. Alternativas aceitáveis: Estrutura, Governança, Ecossistema. A mais forte continua sendo <strong>Arquitetura</strong>.</p>
+  <div class="field-label">Posicionamento Completo</div>
+  <p>Para empresas B2B que querem crescer de forma consistente e sustentável, a Veross é a única parceira que estrutura o ecossistema comercial de ponta a ponta — integrando desenvolvimento humano, método e tecnologia — para transformar crescimento circunstancial em operação governável, orientada aos 4Rs.</p>
+  <div class="quote"><p>Enquanto o mercado oferece táticas isoladas, a Veross arquiteta o sistema.</p></div>
+  <div class="field-label">O que nos separa</div>
+  <p>Não terceirizamos o problema comercial — estruturamos para que o cliente seja capaz de operar, replicar e evoluir por conta própria. Quem busca atalho, não é nosso cliente. Quem quer construir, é.</p>
+</div>
+
+<!-- 06 PROMESSA -->
+<div class="section" id="promessa">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-titles">
+      <div class="section-label">Fundamentos da Marca</div>
+      <div class="section-title">PROMESSA DE MARCA</div>
+    </div>
+  </div>
+  <div class="quote"><p>Você vai sair daqui sabendo exatamente o que foi feito, por que funcionou e como replicar. Com método na mão, time mais capaz e operação que continua crescendo depois que a gente sai.</p></div>
+  <p>A promessa da Veross é o oposto da dependência: não criamos clientes cativos — criamos operações autônomas.</p>
+</div>
+
+<!-- 07 IDENTIDADE VERBAL -->
+<div class="section" id="verbal">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-titles">
+      <div class="section-label">Identidade</div>
+      <div class="section-title">IDENTIDADE VERBAL</div>
+    </div>
+  </div>
+
+  <div class="field-label">Tom de Voz</div>
+  <table class="data-table">
+    <thead><tr><th>Atributo</th><th>O que significa na prática</th></tr></thead>
+    <tbody>
+      <tr><td>Direto e Assertivo</td><td>Vai ao ponto sem rodeios. Frases curtas, ideias claras.</td></tr>
+      <tr><td>Motivacional sem ser Vazio</td><td>Estimula a ação com base em método e resultado real.</td></tr>
+      <tr><td>Didático sem ser Condescendente</td><td>Ensina com autoridade, mas respeita a inteligência de quem lê.</td></tr>
+      <tr><td>Desafiador</td><td>Questiona padrões, provoca reflexão.</td></tr>
+      <tr><td>Confiante e Acessível</td><td>Fala como quem domina o assunto, mas nunca como quem está acima do outro.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="field-label">Tom por Canal</div>
+  <table class="canal-table">
+    <thead><tr><th>Canal</th><th>Tom</th><th>Exemplo</th></tr></thead>
+    <tbody>
+      <tr><td>LinkedIn</td><td>Profissional, consultivo, desafiador</td><td>Muitas empresas querem vender mais, mas ainda operam no improviso. Sem estrutura, crescimento vira esforço isolado.</td></tr>
+      <tr><td>Instagram</td><td>Educacional, provocativo, visual</td><td>Vender mais não resolve uma operação desorganizada. Primeiro, estrutura. Depois, escala.</td></tr>
+      <tr><td>TikTok / Reels</td><td>Direto, simples, dinâmico</td><td>Quer crescer sem estrutura? Então prepare-se para apagar incêndio todo mês.</td></tr>
+      <tr><td>YouTube</td><td>Didático, profundo, educativo</td><td>Vamos mostrar como estruturar um ecossistema comercial B2B conectando estratégia, processo e tecnologia.</td></tr>
+      <tr><td>WhatsApp</td><td>Conversacional, objetivo, humano</td><td>Oi, [nome]. Acredito que podemos conversar sobre como estruturar melhor a geração de oportunidades da sua empresa.</td></tr>
+      <tr><td>E-mail / Newsletter</td><td>Consultivo, educativo, orientado a resultados</td><td>Empresas que dependem só de indicação têm dificuldade para crescer com previsibilidade.</td></tr>
+      <tr><td>Site / Landing Page</td><td>Institucional, direto, confiável</td><td>A Veross estrutura ecossistemas comerciais B2B para fortalecer negócios em Receita, Recorrência, Rentabilidade e Replicabilidade.</td></tr>
+      <tr><td>Propostas</td><td>Profissional, seguro, orientado a valor</td><td>A proposta da Veross é estruturar uma operação comercial mais clara, organizada e sustentável.</td></tr>
+      <tr><td>Webinars / Aulas</td><td>Didático, prático, provocativo</td><td>Antes de falar em automação, precisamos falar sobre estrutura. Ferramenta nenhuma salva uma operação sem clareza de processo.</td></tr>
+      <tr><td>Anúncios Pagos</td><td>Direto, impactante, focado em dor</td><td>Sua empresa precisa de mais clientes ou de uma estrutura que consiga sustentar o crescimento?</td></tr>
+      <tr><td>Atendimento</td><td>Claro, humano, resolutivo</td><td>Vamos verificar esse ponto com objetividade. Primeiro, precisamos entender o cenário atual.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="field-label">O que a Veross nunca diria sobre si mesma</div>
+  <ul class="brand-list">
+    <li>Somos uma consultoria.</li>
+    <li>Fazemos as vendas por você.</li>
+    <li>Resultados garantidos.</li>
+    <li>É simples e rápido.</li>
+    <li>Nossa ferramenta resolve tudo.</li>
+  </ul>
+
+  <div class="field-label">Nomenclatura Proprietária</div>
+  <table class="data-table">
+    <thead><tr><th>Termo</th><th>Uso correto</th></tr></thead>
+    <tbody>
+      <tr><td>Veross</td><td>Nunca "veross" ou "VEROSS" em texto corrido.</td></tr>
+      <tr><td>Método MHMA</td><td>Mentalidade, Habilidades, Método, Ação.</td></tr>
+      <tr><td>2EOGM</td><td>Estratégia, Estruturação, Operação, Gestão, Melhoria Contínua. Também: Flywheel do Ecossistema Comercial.</td></tr>
+      <tr><td>C.E.C.E.</td><td>Conectar, Engajar, Converter, Encantar. É a jornada comercial, não um funil.</td></tr>
+      <tr><td>Os 4Rs</td><td>Receita, Recorrência, Rentabilidade e Replicabilidade. Sempre nessa ordem.</td></tr>
+      <tr><td>AlessIA Flow</td><td>Grafia com "IA" em maiúsculo — intencional.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="field-label">Hashtags Oficiais</div>
+  <div class="hashtag-list">
+    <span class="hashtag">#vamospracima</span>
+    <span class="hashtag">#vamosjuntos</span>
+    <span class="hashtag">#rumoaoproximonivel</span>
+    <span class="hashtag">#gentecrescecomgente</span>
+  </div>
+
+  <div class="field-label">Frases de Marca</div>
+  <div class="frase-card"><p>Se você não tem um processo, você é o processo.</p></div>
+  <div class="frase-card"><p>A meta que você não bateu é aquele cliente que você não prospectou.</p></div>
+  <div class="frase-card"><p>Vender não é ser garçom: Gostaria disso? Não. Obrigado. — e sai.</p></div>
+  <div class="frase-card"><p>A forma mais comum de desperdiçar investimento comercial não é gastar demais — é gastar de menos para estruturar direito.</p></div>
+  <div class="frase-card"><p>Não existe resultado robusto com investimento tímido em estrutura, processo e execução. Quem faz pela metade, colhe pela metade — ou nem isso.</p></div>
+</div>
+
+<!-- 08 MENSAGENS-CHAVE -->
+<div class="section" id="mensagens">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-titles">
+      <div class="section-label">Identidade</div>
+      <div class="section-title">MENSAGENS-CHAVE</div>
+    </div>
+  </div>
+
+  <div class="field-label">Tagline Oficial</div>
+  <div class="quote"><p>Estruturamos como empresas B2B vendem e replicam isso continuadamente.</p></div>
+
+  <div class="field-label">Pitches — clique para expandir</div>
+
+  <div class="pitch-card">
+    <div class="pitch-header" onclick="togglePitch(this)">
+      <span class="pitch-title">Elevator Pitch</span>
+      <span class="pitch-context">10–15 segundos · networking, início de call</span>
+    </div>
+    <div class="pitch-body">Ajudamos empresas B2B a transformar crescimento comercial incerto em um modelo estruturado de vendas, conectando pessoas, processos e tecnologia para gerar Receita, Recorrência, Rentabilidade e Replicabilidade.</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-header" onclick="togglePitch(this)">
+      <span class="pitch-title">Pitch Executivo</span>
+      <span class="pitch-context">30 segundos · reuniões com decisores</span>
+    </div>
+    <div class="pitch-body">A Veross organiza a operação comercial de empresas B2B de ponta a ponta, substituindo crescimento improvisado por um sistema estruturado orientado aos 4Rs: Receita, Recorrência, Rentabilidade e Replicabilidade. O Outbound é tratado como alavanca estratégica dentro desse ecossistema.</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-header" onclick="togglePitch(this)">
+      <span class="pitch-title">Pitch de Diferenciação</span>
+      <span class="pitch-context">Propostas, comparativos, momentos de objeção</span>
+    </div>
+    <div class="pitch-body">Vender mais resolve o mês. Ter que reconstruir tudo a cada ciclo vira problema.<br><br>Enquanto o mercado mexe em peças soltas, a Veross organiza o seu ecossistema. Vender mais não resolve se a cada ciclo você precisa começar tudo de novo.</div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-header" onclick="togglePitch(this)">
+      <span class="pitch-title">Pitch de Qualificação — Anti-Cliente</span>
+      <span class="pitch-context">Páginas estratégicas, conversas francas</span>
+    </div>
+    <div class="pitch-body">
+      <strong>Direto:</strong> Se você quer atalhos ou terceirizar o problema comercial, a Veross não é para você.<br><br>
+      <strong>Elegante:</strong> Se a expectativa for buscar atalhos ou terceirizar o problema comercial, a Veross provavelmente não é o parceiro certo.<br><br>
+      <strong>Do fundador:</strong> Se a expectativa for só pisar mais no acelerador sem preparar o motor, a gente provavelmente não vai ser a melhor solução.
+    </div>
+  </div>
+
+  <div class="pitch-card">
+    <div class="pitch-header" onclick="togglePitch(this)">
+      <span class="pitch-title">Pitch do Fundador — Storytelling</span>
+      <span class="pitch-context">Palestras, conteúdos longos, páginas institucionais</span>
+    </div>
+    <div class="pitch-body">Ao longo de mais de duas décadas na área comercial B2B, sendo 16 anos dentro de grandes empresas multinacionais, estive direta ou indiretamente praticamente o tempo todo dentro do jogo de prospecção, vendas e construção de operações comerciais.<br><br>Em outubro de 2020, sentei para fazer uma revisão profunda do que tinha aprendido até então. O que ficou claro foi incômodo: os problemas centrais das operações comerciais continuavam os mesmos. Era falta de estrutura.<br><br>Foi desse ponto que nasceu a Veross. Não para vender atalhos — mas para estruturar como a operação comercial precisa funcionar de verdade.<br><br><em>Porque vender mais resolve o mês. Mas estruturar como vender melhor é o que sustenta empresas de verdade ao longo do tempo.</em></div>
+  </div>
+</div>
+
+<!-- 09 ARQUITETURA -->
+<div class="section" id="arquitetura">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div class="section-titles">
+      <div class="section-label">Estrutura</div>
+      <div class="section-title">ARQUITETURA DE MARCA</div>
+    </div>
+  </div>
+  <p>A Veross é a marca central e o padrão de qualidade que permeia todo o ecossistema. O <strong>Synexus Group</strong> é o ecossistema de negócios construído em torno dela — uma aliança, não um produto.</p>
+  <div class="field-label">Os 4 Pilares de Solução</div>
+  <div class="pilar-grid">
+    <div class="pilar-card">
+      <div class="pilar-num">01</div>
+      <div class="pilar-name">Academia Veross</div>
+      <p class="pilar-desc">Educação e desenvolvimento humano. Imersão MHMA, mentorias, plataforma online.</p>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-num">02</div>
+      <div class="pilar-name">Tecnologia</div>
+      <p class="pilar-desc">AlessIA Flow, Veross Scraper AI, Agentes IA. Parceiros: Onvox, Meetime.</p>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-num">03</div>
+      <div class="pilar-name">Serviços Operacionais</div>
+      <p class="pilar-desc">VMND — Veross Mais Negócios Digitais. Estruturação comercial de ponta a ponta.</p>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-num">04</div>
+      <div class="pilar-name">Outsourcing</div>
+      <p class="pilar-desc">Máquina Veross (MQNV) e Success First. Operação terceirizada de pré-vendas.</p>
+    </div>
+  </div>
+  <div class="nota">A tecnologia na Veross é sempre apresentada como alavanca — nunca como solução completa por si só. Ferramenta sem método não performa.</div>
+</div>
+
+<!-- 10 IDENTIDADE VISUAL -->
+<div class="section" id="visual">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <div class="section-titles">
+      <div class="section-label">Estrutura</div>
+      <div class="section-title">IDENTIDADE VISUAL</div>
+    </div>
+  </div>
+
+  <div class="field-label">Cores Primárias</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#060923;"></div>
+      <div class="swatch-info"><div class="swatch-name">Azul-escuro profundo</div><div class="swatch-hex">#060923 · 6/9/35</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#AE8A56;"></div>
+      <div class="swatch-info"><div class="swatch-name">Marrom-dourado quente</div><div class="swatch-hex">#AE8A56 · 174/138/86</div></div>
+    </div>
+  </div>
+
+  <div class="field-label">Cores Secundárias</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#ECD7B4;"></div>
+      <div class="swatch-info"><div class="swatch-name">Amêndoa</div><div class="swatch-hex">#ECD7B4</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#CDCDD0;"></div>
+      <div class="swatch-info"><div class="swatch-name">Platina</div><div class="swatch-hex">#CDCDD0</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#FCFCFC; border:1px solid #eee;"></div>
+      <div class="swatch-info"><div class="swatch-name">Branco Digital</div><div class="swatch-hex">#FCFCFC</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#000000;"></div>
+      <div class="swatch-info"><div class="swatch-name">Preta Pura</div><div class="swatch-hex">#000000</div></div>
+    </div>
+  </div>
+
+  <div class="field-label">Tipografia</div>
+  <div class="tipo-grid">
+    <div class="tipo-card">
+      <div class="tipo-font" style="font-family:'Bebas Neue',sans-serif;">Aa</div>
+      <div class="tipo-name">League Spartan</div>
+      <div class="tipo-use">Títulos</div>
+    </div>
+    <div class="tipo-card">
+      <div class="tipo-font" style="font-family:'DM Sans',sans-serif; font-weight:300;">Aa</div>
+      <div class="tipo-name">Muli / Mulish</div>
+      <div class="tipo-use">Corpo de texto</div>
+    </div>
+    <div class="tipo-card">
+      <div class="tipo-font" style="font-family:'DM Mono',monospace; font-size:28px;">Aa</div>
+      <div class="tipo-name">Code Pro</div>
+      <div class="tipo-use">Legendas técnicas</div>
+    </div>
+  </div>
+
+  <div class="field-label">Hierarquia Tipográfica</div>
+  <table class="data-table">
+    <thead><tr><th>Nível</th><th>Fonte</th><th>Tamanho</th></tr></thead>
+    <tbody>
+      <tr><td>Título</td><td>League Spartan Bold</td><td>40pt</td></tr>
+      <tr><td>Cabeçalho</td><td>Muli Extranegrito</td><td>32pt</td></tr>
+      <tr><td>Subtítulo</td><td>Muli Regular</td><td>24pt</td></tr>
+      <tr><td>Cabeçalho de seção</td><td>Muli Extranegrito</td><td>16pt</td></tr>
+      <tr><td>Corpo</td><td>Muli Regular</td><td>12pt</td></tr>
+      <tr><td>Citação</td><td>Muli Leve</td><td>15pt</td></tr>
+      <tr><td>Legenda</td><td>Code Pro Regular</td><td>9pt</td></tr>
+    </tbody>
+  </table>
+
+  <div class="nota">O logotipo atual está em revisão para desenvolvimento de versões complementares — símbolo isolado, versão negativa e monocromática. Atualizar quando finalizadas.</div>
+</div>
+
+<!-- 11 APLICAÇÕES -->
+<div class="section" id="aplicacoes">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <div class="section-titles">
+      <div class="section-label">Aplicação</div>
+      <div class="section-title">APLICAÇÕES PRÁTICAS</div>
+    </div>
+  </div>
+
+  <div class="field-label">Estrutura da Proposta Comercial</div>
+  <table class="data-table">
+    <thead><tr><th>Seção</th><th>Conteúdo</th></tr></thead>
+    <tbody>
+      <tr><td>1. Capa</td><td>Logo Veross + nome do cliente + data + "Aos cuidados de"</td></tr>
+      <tr><td>2. Índice</td><td>Navegável com links internos</td></tr>
+      <tr><td>3. Introdução</td><td>Quem somos + números de prova social</td></tr>
+      <tr><td>4. Necessidade</td><td>As dores mapeadas na conversa (personalizado)</td></tr>
+      <tr><td>5. Solução</td><td>O que será feito, etapas e cronograma</td></tr>
+      <tr><td>6. Equipe</td><td>Lucas Silvestre + time operacional</td></tr>
+      <tr><td>7. Conquistas</td><td>Cases e resultados reais</td></tr>
+      <tr><td>8. Investimento</td><td>Tabela de valores mensal e anual</td></tr>
+      <tr><td>9. Próximos Passos</td><td>Timeline de onboarding + contato</td></tr>
+      <tr><td>10. Contracapa</td><td>"Rumo ao próximo nível..." + www.veross.com.br</td></tr>
+    </tbody>
+  </table>
+  <div class="nota">A contracapa "Rumo ao próximo nível..." é assinatura da marca — preservar em todas as propostas.</div>
+
+  <div class="field-label">Prova Social Oficial</div>
+  <table class="data-table">
+    <thead><tr><th>Dado</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td>Experiência em B2B</td><td>20 anos</td></tr>
+      <tr><td>Clientes atendidos</td><td>+123</td></tr>
+      <tr><td>Prospecções realizadas</td><td>+4 milhões</td></tr>
+      <tr><td>Vendas geradas p/ clientes</td><td>+R$ 93 milhões</td></tr>
+      <tr><td>Top Voice LinkedIn</td><td>3x — Sales Prospecting</td></tr>
+      <tr><td>Pioneirismo</td><td>1ª empresa a lançar Agente IA de prospecção no LinkedIn no Brasil</td></tr>
+    </tbody>
+  </table>
+  <div class="nota">Atualizar trimestralmente. Guardião: CEO.</div>
+</div>
+
+<!-- 12 TERCEIROS -->
+<div class="section" id="terceiros">
+  <div class="section-header">
+    <div class="section-num">12</div>
+    <div class="section-titles">
+      <div class="section-label">Aplicação</div>
+      <div class="section-title">DIRETRIZES PARA TERCEIROS</div>
+    </div>
+  </div>
+
+  <div class="field-label">O que terceiros podem fazer</div>
+  <ul class="brand-list">
+    <li>Usar o logotipo oficial nos formatos do Brand Center</li>
+    <li>Reproduzir as cores e tipografias oficiais conforme as diretrizes</li>
+    <li>Utilizar os textos institucionais aprovados sem alteração</li>
+    <li>Criar peças dentro dos templates aprovados</li>
+    <li>Referenciar os frameworks proprietários sem distorção de significado</li>
+  </ul>
+
+  <div class="field-label">O que terceiros NÃO podem fazer</div>
+  <ul class="brand-list">
+    <li>Alterar cores, proporções ou elementos do logotipo</li>
+    <li>Posicionar a Veross como consultoria, atalho ou solução isolada</li>
+    <li>Fazer promessas de resultado não validadas pela Veross</li>
+    <li>Associar a marca a causas políticas, religiosas ou conteúdo controverso</li>
+    <li>Sublicenciar o uso da marca sem aprovação do CEO</li>
+  </ul>
+
+  <div class="field-label">Processo de Aprovação</div>
+  <table class="data-table">
+    <thead><tr><th>Etapa</th><th>Ação</th></tr></thead>
+    <tbody>
+      <tr><td>1. Briefing</td><td>Terceiro recebe briefing com objetivo, canal, público e referências aprovadas</td></tr>
+      <tr><td>2. Entrega</td><td>Peça enviada ao guardião com pelo menos 48h de antecedência</td></tr>
+      <tr><td>3. Revisão</td><td>Guardião verifica alinhamento com este Branding Book</td></tr>
+      <tr><td>4. Aprovação</td><td>Peça aprovada segue para publicação ou retorna com orientações</td></tr>
+      <tr><td>5. Arquivo</td><td>Toda peça aprovada é arquivada no Brand Center com data e versão</td></tr>
+    </tbody>
+  </table>
+  <div class="nota">O guardião da marca da Veross é o CEO, Lucas Silvestre. Em caso de dúvida, a decisão final é sempre dele.</div>
+</div>
+
+</div><!-- end content-area -->
+
+<!-- ENCERRAMENTO -->
+<div id="encerramento">
+  <h2>Rumo ao próximo nível.</h2>
+  <p>veross.com.br · Documento Confidencial · Versão Maio 2026</p>
+</div>
+
+</main>
+
+<script>
+// ── PROGRESS BAR ──
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const max = document.body.scrollHeight - window.innerHeight;
+  progress.style.transform = `scaleX(${window.scrollY / max})`;
+});
+
+// ── ACTIVE NAV ──
+const sections = document.querySelectorAll('.section, #cover, #encerramento');
+const navLinks = document.querySelectorAll('nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const id = entry.target.id;
+      const active = document.querySelector(`nav a[href="#${id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -40% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// ── SCROLL ANIMATION ──
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.section').forEach(s => sectionObserver.observe(s));
+
+// ── PITCH TOGGLE ──
+function togglePitch(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ── SEARCH ──
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  if (!q) {
+    document.querySelectorAll('.section').forEach(s => s.style.display = '');
+    return;
+  }
+  document.querySelectorAll('.section').forEach(s => {
+    s.style.display = s.innerText.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>
