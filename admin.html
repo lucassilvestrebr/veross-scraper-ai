@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="/support.js"></script>
+<script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
@@ -396,7 +396,7 @@ class Component extends DCLogic {
     const [uRes, rRes] = await Promise.all([
       sb.rpc('admin_get_users'),
       sb.from('scraping_requests')
-        .select('id, user_id, display_name, status, requested_qty, extracted_qty, credits_used, file_url, created_at')
+        .select('id, user_id, display_name, status, requested_qty, extracted_qty, credits_used, file_url, created_at, completed_at')
         .order('created_at', {ascending:false}),
     ]);
     if (!this._m) return;
@@ -432,25 +432,58 @@ class Component extends DCLogic {
   async saveEdit() {
     const {editReq, editStatus, editFileUrl, editExtQty, editCredits} = this.state;
     if (!editReq) return;
+
     this.setState({saving:true});
-    const sb = getSB(); if (!sb) return;
+
+    const sb = getSB();
+    if (!sb) {
+      this.setState({saving:false});
+      return;
+    }
+
+    const nowIso = new Date().toISOString();
+
     const patch = {
       status: editStatus,
-      file_url: editFileUrl || null,
-      extracted_qty: editExtQty ? parseInt(editExtQty) : null,
-      credits_used: editCredits ? parseInt(editCredits) : null,
+      file_url: editFileUrl ? editFileUrl.trim() : null,
+      extracted_qty: editExtQty !== '' && editExtQty != null ? parseInt(editExtQty, 10) : null,
+      credits_used: editCredits !== '' && editCredits != null ? parseInt(editCredits, 10) : null,
     };
-    if (editStatus === 'completed' && !patch.completed_at) patch.completed_at = new Date().toISOString();
-    const {error} = await sb.from('scraping_requests').update(patch).eq('id', editReq.id);
+
+    // Quando o admin marcar como concluído, grava completed_at.
+    // Se já existir completed_at, preserva a data original.
+    if (editStatus === 'completed') {
+      patch.completed_at = editReq.completed_at || nowIso;
+    }
+
+    // Se voltar de concluído para outro status, limpa completed_at.
+    if (editReq.status === 'completed' && editStatus !== 'completed') {
+      patch.completed_at = null;
+    }
+
+    const {error} = await sb
+      .from('scraping_requests')
+      .update(patch)
+      .eq('id', editReq.id);
+
     if (!this._m) return;
+
     if (error) {
       this.showToast('error', '✕ Erro ao salvar: ' + error.message);
+      this.setState({saving:false});
     } else {
-      const requests = this.state.requests.map(r => r.id === editReq.id ? {...r, ...patch} : r);
-      this.setState({requests, editReq:null, saving:false});
+      const requests = this.state.requests.map(r =>
+        r.id === editReq.id ? {...r, ...patch} : r
+      );
+
+      this.setState({
+        requests,
+        editReq: null,
+        saving: false
+      });
+
       this.showToast('success', '✓ Solicitação atualizada com sucesso.');
     }
-    this.setState({saving:false});
   }
 
   renderVals() {
