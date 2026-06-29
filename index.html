@@ -685,6 +685,72 @@ input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
 
         </div>
       </div>
+
+      <!-- HISTÓRICO SEARCH URL -->
+      <div style="background:{{t.bgCard}};border-radius:14px;box-shadow:{{t.cardShadow}};padding:28px;margin-bottom:28px;border:1px solid {{t.border}}">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+          <div>
+            <div style="font-family:'League Spartan',sans-serif;font-size:20px;font-weight:700;color:{{t.textPrimary}};letter-spacing:0.5px">Histórico de Buscas</div>
+            <div style="font-size:13px;color:{{t.textSecondary}};margin-top:3px">Todas as suas buscas de URL LinkedIn salvas automaticamente.</div>
+          </div>
+        </div>
+        <sc-if value="{{urlHistIsEmpty}}" hint-placeholder-val="{{false}}">
+          <div style="padding:40px;text-align:center">
+            <div style="width:44px;height:44px;border-radius:10px;background:rgba(10,102,194,0.1);border:1px solid rgba(10,102,194,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </div>
+            <div style="font-size:14px;font-weight:500;color:{{t.textSecondary}}">Nenhuma busca ainda</div>
+            <div style="font-size:12px;color:{{t.textMuted}};margin-top:4px">Faça sua primeira busca acima para ver o histórico aqui.</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{urlHistNotEmpty}}" hint-placeholder-val="{{true}}">
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;min-width:560px">
+              <thead>
+                <tr style="background:{{t.tableHead}}">
+                  <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:{{t.textMuted}};border-bottom:1px solid {{t.tableBorder}}">Data</th>
+                  <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:{{t.textMuted}};border-bottom:1px solid {{t.tableBorder}}">Nome</th>
+                  <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:{{t.textMuted}};border-bottom:1px solid {{t.tableBorder}}">Empresa</th>
+                  <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:{{t.textMuted}};border-bottom:1px solid {{t.tableBorder}}">E-mail</th>
+                  <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:{{t.textMuted}};border-bottom:1px solid {{t.tableBorder}}">Status</th>
+                  <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:{{t.textMuted}};border-bottom:1px solid {{t.tableBorder}}">Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{urlHistRows}}" as="hr" hint-placeholder-count="0">
+                  <tr style="border-bottom:1px solid {{t.tableBorder}}" style-hover="background:{{t.tableRowHover}}">
+                    <td style="padding:11px 14px;font-size:12px;color:{{t.textSecondary}};white-space:nowrap;font-family:'DM Mono',monospace">{{hr.date}}</td>
+                    <td style="padding:11px 14px;font-size:13px;color:{{t.textPrimary}};font-weight:500;white-space:nowrap">{{hr.name}}</td>
+                    <td style="padding:11px 14px;font-size:13px;color:{{t.textSecondary}};white-space:nowrap">{{hr.company}}</td>
+                    <td style="padding:11px 14px;font-size:12px;color:{{t.textSecondary}};font-family:'DM Mono',monospace">{{hr.email}}</td>
+                    <td style="padding:11px 14px">
+                      <span style="display:inline-flex;align-items:center;background:{{hr.stBg}};border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:{{hr.stColor}};white-space:nowrap">{{hr.stLabel}}</span>
+                    </td>
+                    <td style="padding:11px 14px">
+                      <sc-if value="{{hr.hasUrl}}" hint-placeholder-val="{{false}}">
+                        <a href="{{hr.url}}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:#60A5FA;text-decoration:none;font-weight:600" style-hover="text-decoration:underline">Abrir →</a>
+                      </sc-if>
+                      <sc-if value="{{hr.hasNoUrl}}" hint-placeholder-val="{{false}}">
+                        <span style="font-size:12px;color:{{t.textMuted}}">—</span>
+                      </sc-if>
+                    </td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <sc-if value="{{urlHistHasPagination}}" hint-placeholder-val="{{false}}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid {{t.border}}">
+              <span style="font-size:12px;color:{{t.textMuted}}">{{urlHistPageCount}} de {{urlHistTotalCount}} buscas</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <button onClick="{{urlHistPrevPage}}" style="padding:5px 13px;border-radius:7px;border:1px solid {{t.border}};background:{{t.bgInput}};color:{{t.textSecondary}};font-size:12px;font-weight:600;cursor:pointer;opacity:{{urlHistPrevOp}}">← Anterior</button>
+                <span style="font-size:12px;color:{{t.textMuted}};font-family:'DM Mono',monospace;min-width:40px;text-align:center">{{urlHistPageLabel}}</span>
+                <button onClick="{{urlHistNextPage}}" style="padding:5px 13px;border-radius:7px;border:1px solid {{t.border}};background:{{t.bgInput}};color:{{t.textSecondary}};font-size:12px;font-weight:600;cursor:pointer;opacity:{{urlHistNextOp}}">Próxima →</button>
+              </div>
+            </div>
+          </sc-if>
+        </sc-if>
+      </div>
       </sc-if>
 
       <!-- SETTINGS -->
@@ -1232,6 +1298,7 @@ class Component extends DCLogic {
     appView:'scraper',
     urlForm:{firstName:'',lastName:'',company:'',city:'',wantEmail:false},
     urlMode:'individual', urlResult:null, urlSearching:false,
+    urlHistory:[], urlHistoryPage:0,
     batchText:'', batchRows:[], batchProcessing:false, batchResults:[],
     credBilling:'monthly', customQty:'5000', customPrice:'900',
     profileOpen:false, profileEdit:{firstName:'',lastName:'',linkedin:'',whatsapp:''},
@@ -1321,6 +1388,7 @@ class Component extends DCLogic {
     });
     clearInterval(this._pollTimer);
     this._pollTimer = setInterval(() => this.pollRequests(), POLLING_MS);
+    this.loadURLHistory();
   }
 
   async pollRequests() {
@@ -1593,6 +1661,32 @@ class Component extends DCLogic {
     if (this._mounted) this.setState({avatarUploading:false, currentUser:{...this.state.currentUser, avatarUrl:publicUrl}});
   }
 
+  async saveURLSearch({firstName,lastName,company,city,wantEmail,status,profileUrl,searchUrl,email,confidence,fullName}) {
+    const sb = getSB(); if (!sb || !this.state.currentUser) return;
+    try {
+      await sb.from('url_search_history').insert({
+        user_id:this.state.currentUser.id,
+        first_name:firstName||'', last_name:lastName||'', company:company||'',
+        city:city||'', want_email:wantEmail||false, mode:'individual',
+        status:status||'error',
+        profile_url:profileUrl||null, search_url:searchUrl||null,
+        email_found:email||null, confidence:confidence||null,
+        full_name_found:fullName||null,
+      });
+      await this.loadURLHistory();
+    } catch(e) { console.warn('[saveURLSearch]', e); }
+  }
+
+  async loadURLHistory() {
+    const sb = getSB(); if (!sb || !this.state.currentUser) return;
+    try {
+      const {data} = await sb.from('url_search_history')
+        .select('*').eq('user_id', this.state.currentUser.id)
+        .order('created_at', {ascending:false}).limit(200);
+      if (this._mounted && data) this.setState({urlHistory:data});
+    } catch(e) { console.warn('[loadURLHistory]', e); }
+  }
+
   normalizeURLSearchResponse(raw) {
     let data = raw;
 
@@ -1668,6 +1762,12 @@ class Component extends DCLogic {
         openMode: data?.open_mode || 'new_tab',
         rel: data?.rel || 'noopener noreferrer'
       }, urlSearching:false});
+      // Salvar no histórico
+      this.saveURLSearch({
+        firstName:urlForm.firstName, lastName:urlForm.lastName,
+        company:urlForm.company, city:urlForm.city, wantEmail:urlForm.wantEmail,
+        status, profileUrl, searchUrl:fallbackSearchUrl, email, confidence, fullName:name
+      });
     } catch(e) {
       console.warn('[urlSearch]', e);
       if (this._mounted) this.setState({urlResult:{status:'error', found:false, url:'', searchUrl:'', actionUrl:'', actionLabel:'', name:'', email:'', confidence:null, title:'', canEmbed:false, openMode:'new_tab'}, urlSearching:false});
@@ -1835,6 +1935,36 @@ class Component extends DCLogic {
     const stEarnBorder    = stBorderOf(stEarn);    const stEarnColor    = stColorOf(stEarn);
 
     // Avatar — definido AQUI, mas user ainda não existe: mover para após a seção User
+
+    // URL Search History
+    const URL_HIST_PS = 10;
+    const urlHistPage  = s.urlHistoryPage || 0;
+    const urlHistAll   = s.urlHistory || [];
+    const urlHistTotal = Math.max(1, Math.ceil(urlHistAll.length / URL_HIST_PS));
+    const urlHistSafe  = Math.min(urlHistPage, urlHistTotal - 1);
+    const urlHistPaged = urlHistAll.slice(urlHistSafe * URL_HIST_PS, (urlHistSafe + 1) * URL_HIST_PS);
+    const urlHistIsEmpty     = urlHistAll.length === 0;
+    const urlHistNotEmpty    = !urlHistIsEmpty;
+    const urlHistHasPagination = urlHistAll.length > URL_HIST_PS;
+    const urlHistHasPrev     = urlHistSafe > 0;
+    const urlHistHasNext     = urlHistSafe < urlHistTotal - 1;
+    const urlHistPageLabel   = (urlHistSafe + 1) + ' / ' + urlHistTotal;
+    const urlHistPrevOp      = urlHistHasPrev ? '1' : '0.35';
+    const urlHistNextOp      = urlHistHasNext ? '1' : '0.35';
+    const urlHistPageCount   = urlHistPaged.length;
+    const urlHistTotalCount  = urlHistAll.length;
+    const urlHistRows = urlHistPaged.map(h => {
+      const stC  = h.status==='done'?'#4ADE80':h.status==='search'?'#60A5FA':h.status==='not_found'?'#FCD34D':'#F87171';
+      const stBg = h.status==='done'?'rgba(22,163,74,0.15)':h.status==='search'?'rgba(10,102,194,0.15)':h.status==='not_found'?'rgba(217,119,6,0.15)':'rgba(239,68,68,0.15)';
+      const stLbl= h.status==='done'?'Encontrado':h.status==='search'?'Busca':h.status==='not_found'?'Não encontrado':'Erro';
+      const url  = h.profile_url || h.search_url || '';
+      return {
+        id:h.id, date:fmtDate(h.created_at, locale),
+        name:((h.first_name||'')+' '+(h.last_name||'')).trim()||'—',
+        company:h.company||'—', email:h.email_found||'—',
+        stColor:stC, stBg, stLabel:stLbl, url, hasUrl:!!url, hasNoUrl:!url,
+      };
+    });
 
     // URL Search form
     const uf = s.urlForm;
@@ -2170,6 +2300,12 @@ class Component extends DCLogic {
       urlResultIsOk: s.urlResult?.status === 'done',
       urlResultURL: s.urlResult?.url || '',
       urlResultActionURL: s.urlResult?.actionUrl || s.urlResult?.url || s.urlResult?.searchUrl || '',
+      urlHistPageCount, urlHistTotalCount,
+      urlHistRows, urlHistIsEmpty, urlHistNotEmpty, urlHistHasPagination,
+      urlHistPage:urlHistSafe, urlHistTotal, urlHistPageLabel,
+      urlHistHasPrev, urlHistHasNext, urlHistPrevOp, urlHistNextOp,
+      urlHistPrevPage:()=>{ if(urlHistHasPrev) this.setState(s=>({urlHistoryPage:Math.max(0,(s.urlHistoryPage||0)-1)})); },
+      urlHistNextPage:()=>{ if(urlHistHasNext) this.setState(s=>({urlHistoryPage:Math.min(urlHistTotal-1,(s.urlHistoryPage||0)+1)})); },
       urlResultHasAction: !!(s.urlResult?.actionUrl || s.urlResult?.url || s.urlResult?.searchUrl),
       urlResultActionLabel: s.urlResult?.actionLabel || (s.urlResult?.status === 'done' ? 'Abrir perfil no LinkedIn' : 'Abrir busca no LinkedIn'),
       urlResultActionKindLabel: s.urlResult?.status === 'done' ? 'LinkedIn' : 'Busca',
