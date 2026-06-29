@@ -69,7 +69,7 @@ input,select{outline:none;font-family:'DM Sans',sans-serif;}
 <div style="display:flex;flex-direction:column;min-height:100vh;animation:fadeUp 0.25s ease">
 
   <!-- TOPBAR -->
-  <div style="background:#0C1235;border-bottom:1px solid rgba(174,138,86,0.14);padding:0 28px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+  <div style="background:#0C1235;border-bottom:1px solid rgba(174,138,86,0.14);padding:{{adminTopbarPad}};height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
     <div style="display:flex;align-items:center;gap:12px">
       <div style="display:flex;align-items:center;gap:6px;background:rgba(174,138,86,0.1);border:1px solid rgba(174,138,86,0.25);border-radius:6px;padding:4px 10px">
         <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6.5H15L11.2 9.5L12.5 14L8 11.2L3.5 14L4.8 9.5L1 6.5H6L8 2Z" fill="#AE8A56"/></svg>
@@ -78,19 +78,19 @@ input,select{outline:none;font-family:'DM Sans',sans-serif;}
       <span style="font-family:'League Spartan',sans-serif;font-size:16px;font-weight:700;color:#FCFCFC">Veross Scraper AI</span>
     </div>
     <div style="display:flex;align-items:center;gap:14px">
-      <span style="font-size:11px;color:rgba(255,255,255,0.3);font-family:'DM Mono',monospace">{{adminEmail}}</span>
+      <sc-if value="{{showAdminEmail}}" hint-placeholder-val="{{true}}"><span style="font-size:11px;color:rgba(255,255,255,0.3);font-family:'DM Mono',monospace">{{adminEmail}}</span></sc-if>
       <button onClick="{{doLogout}}" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,0.45);cursor:pointer">Sair</button>
     </div>
   </div>
 
   <!-- TABS -->
-  <div style="background:#0C1235;border-bottom:1px solid rgba(174,138,86,0.1);padding:0 28px;display:flex;align-items:center;flex-shrink:0">
+  <div style="background:#0C1235;border-bottom:1px solid rgba(174,138,86,0.1);padding:{{adminTabPad}};display:flex;align-items:center;flex-shrink:0">
     <button onClick="{{goUsers}}" style="background:none;border:none;border-bottom:{{tabUB}};padding:12px 16px;font-size:13px;font-weight:600;color:{{tabUC}};cursor:pointer">Usuários ({{usersCount}})</button>
     <button onClick="{{goRequests}}" style="background:none;border:none;border-bottom:{{tabRB}};padding:12px 16px;font-size:13px;font-weight:600;color:{{tabRC}};cursor:pointer">Solicitações ({{reqCount}})</button>
     <button onClick="{{doRefresh}}" style="background:none;border:none;margin-left:auto;padding:12px 0;font-size:11px;color:rgba(174,138,86,0.5);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:1px">↺ ATUALIZAR</button>
   </div>
 
-  <div style="flex:1;padding:24px 28px;overflow:auto">
+  <div style="flex:1;padding:{{adminContentPad}};overflow:auto">
 
     <!-- TOAST -->
     <sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}">
@@ -102,15 +102,15 @@ input,select{outline:none;font-family:'DM Sans',sans-serif;}
     <!-- TAB USUÁRIOS -->
     <sc-if value="{{tabUsers}}" hint-placeholder-val="{{true}}">
     <div style="animation:fadeUp 0.2s ease">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px">
         <div>
           <div style="font-family:'League Spartan',sans-serif;font-size:18px;font-weight:700;color:#FCFCFC">Gerenciar Usuários</div>
           <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px">Adicione ou remova créditos de cada conta</div>
         </div>
-        <input value="{{userSearch}}" onChange="{{setUserSearch}}" placeholder="Buscar por nome ou e-mail..." style="background:#0C1235;border:1px solid rgba(174,138,86,0.18);border-radius:8px;padding:8px 14px;color:#F0F0F8;font-size:12px;width:240px">
+        <input value="{{userSearch}}" onChange="{{setUserSearch}}" placeholder="Buscar por nome ou e-mail..." style="background:#0C1235;border:1px solid rgba(174,138,86,0.18);border-radius:8px;padding:8px 14px;color:#F0F0F8;font-size:12px;width:{{adminUserSearchW}}">
       </div>
-      <div style="background:#0C1235;border:1px solid rgba(174,138,86,0.12);border-radius:12px;overflow:hidden">
-        <div style="display:grid;grid-template-columns:2fr 130px 90px 80px 160px 130px;padding:10px 18px;background:rgba(7,9,30,0.9);border-bottom:1px solid rgba(174,138,86,0.1)">
+      <div style="background:#0C1235;border:1px solid rgba(174,138,86,0.12);border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch">
+        <div style="display:grid;grid-template-columns:2fr 130px 90px 80px 160px 130px;padding:10px 18px;background:rgba(7,9,30,0.9);border-bottom:1px solid rgba(174,138,86,0.1);min-width:680px">
           <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase">Usuário</span>
           <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase">Empresa</span>
           <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:right">Créditos</span>
@@ -122,7 +122,7 @@ input,select{outline:none;font-family:'DM Sans',sans-serif;}
           <div style="padding:40px;text-align:center;color:rgba(255,255,255,0.2);font-size:13px">Nenhum usuário encontrado.</div>
         </sc-if>
         <sc-for list="{{userRows}}" as="u" hint-placeholder-count="4">
-          <div style="display:grid;grid-template-columns:2fr 130px 90px 80px 160px 130px;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center" style-hover="background:rgba(174,138,86,0.03)">
+          <div style="display:grid;grid-template-columns:2fr 130px 90px 80px 160px 130px;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center;min-width:680px" style-hover="background:rgba(174,138,86,0.03)">
             <div>
               <div style="font-size:13px;font-weight:600;color:#F0F0F8">{{u.name}}</div>
               <div style="font-size:11px;color:rgba(255,255,255,0.3);font-family:'DM Mono',monospace;margin-top:2px">{{u.email}}</div>
@@ -146,7 +146,7 @@ input,select{outline:none;font-family:'DM Sans',sans-serif;}
     <!-- TAB SOLICITAÇÕES -->
     <sc-if value="{{tabRequests}}" hint-placeholder-val="{{false}}">
     <div style="animation:fadeUp 0.2s ease">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px">
         <div>
           <div style="font-family:'League Spartan',sans-serif;font-size:18px;font-weight:700;color:#FCFCFC">Todas as Solicitações</div>
           <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px">Atualize status e entregue arquivos</div>
@@ -160,8 +160,8 @@ input,select{outline:none;font-family:'DM Sans',sans-serif;}
           <option value="error">Erro</option>
         </select>
       </div>
-      <div style="background:#0C1235;border:1px solid rgba(174,138,86,0.12);border-radius:12px;overflow:hidden">
-        <div style="display:grid;grid-template-columns:2fr 160px 110px 70px 70px 70px 110px;padding:10px 18px;background:rgba(7,9,30,0.9);border-bottom:1px solid rgba(174,138,86,0.1)">
+      <div style="background:#0C1235;border:1px solid rgba(174,138,86,0.12);border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch">
+        <div style="display:grid;grid-template-columns:2fr 160px 110px 70px 70px 70px 110px;padding:10px 18px;background:rgba(7,9,30,0.9);border-bottom:1px solid rgba(174,138,86,0.1);min-width:760px">
           <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase">Solicitação</span>
           <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase">Usuário</span>
           <span style="font-size:9px;font-weight:700;color:rgba(174,138,86,0.6);letter-spacing:1.5px;text-transform:uppercase;text-align:center">Status</span>
@@ -174,7 +174,7 @@ input,select{outline:none;font-family:'DM Sans',sans-serif;}
           <div style="padding:40px;text-align:center;color:rgba(255,255,255,0.2);font-size:13px">Nenhuma solicitação.</div>
         </sc-if>
         <sc-for list="{{reqRows}}" as="r" hint-placeholder-count="5">
-          <div style="display:grid;grid-template-columns:2fr 160px 110px 70px 70px 70px 110px;padding:11px 18px;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center" style-hover="background:rgba(174,138,86,0.03)">
+          <div style="display:grid;grid-template-columns:2fr 160px 110px 70px 70px 70px 110px;padding:11px 18px;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center;min-width:760px" style-hover="background:rgba(174,138,86,0.03)">
             <div>
               <div style="font-size:13px;font-weight:600;color:#F0F0F8">{{r.name}}</div>
               <div style="font-size:10px;color:rgba(255,255,255,0.28);font-family:'DM Mono',monospace;margin-top:2px">{{r.date}}</div>
@@ -277,10 +277,14 @@ class Component extends DCLogic {
     requests: [], filterStatus: '',
     toast: null,
     editReq: null, editStatus: '', editFileUrl: '', editExtQty: '', editCredits: '', saving: false,
+    isMobile: false,
   };
 
   async componentDidMount() {
     this._m = true;
+    this._resizeHandler = () => { if (this._m) this.setState({isMobile: window.innerWidth < 768}); };
+    window.addEventListener('resize', this._resizeHandler);
+    this.setState({isMobile: window.innerWidth < 768});
     const sb = getSB();
     if (!sb) { this.setState({view:'login'}); return; }
     const {data:{subscription}} = sb.auth.onAuthStateChange((e, session) => this._onAuth(e, session));
@@ -291,6 +295,7 @@ class Component extends DCLogic {
   componentWillUnmount() {
     this._m = false;
     if (this._authSub) this._authSub.unsubscribe();
+    if (this._resizeHandler) window.removeEventListener('resize', this._resizeHandler);
   }
 
   async _onAuth(event, session) {
@@ -561,8 +566,16 @@ class Component extends DCLogic {
 
     const showEditModal = !!s.editReq;
 
+    const mob = this.state.isMobile || false;
+    const showAdminEmail   = !mob;
+    const adminTopbarPad   = mob ? '0 14px' : '0 28px';
+    const adminTabPad      = mob ? '0 14px' : '0 28px';
+    const adminContentPad  = mob ? '14px 12px' : '24px 28px';
+    const adminUserSearchW = mob ? '100%' : '240px';
+
     return {
       isChecking, isLogin, isDenied, isApp,
+      showAdminEmail, adminTopbarPad, adminTabPad, adminContentPad, adminUserSearchW,
       tabUsers, tabRequests,
       hasErr: !!s.loginErr, loginErr: s.loginErr,
       loginBtn: s.loading ? 'Entrando...' : 'ENTRAR',

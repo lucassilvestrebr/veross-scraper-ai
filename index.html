@@ -31,8 +31,25 @@
 <meta name="twitter:image" content="https://itpoitqoeeqggetrfkro.supabase.co/storage/v1/object/public/avatars/og-image.png">
 
 <!-- Tema e favicon -->
-<meta name="theme-color" content="#AE8A56">
+<meta name="theme-color" content="#060923">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23060923'/><text y='24' x='4' font-size='22' font-family='serif' fill='%23AE8A56'>V</text></svg>">
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Scraper AI">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function() {});
+  });
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -310,9 +327,9 @@ input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
           <svg width="12" height="12" fill="none" stroke="#AE8A56" stroke-width="1.5" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5.5 7.5h3a1 1 0 0 1 0 2h-3" stroke-linecap="round"/></svg>
           <span style="font-size:12px;color:#AE8A56;font-weight:600;font-family:'DM Mono',monospace">{{creditsFullText}}</span>
         </div>
-        <button onClick="{{toggleLang}}" style="background:{{t.bgInput}};border:1px solid {{t.border}};color:{{t.textSecondary}};padding:6px 12px;border-radius:8px;font-size:11px;font-family:'DM Mono',monospace;cursor:pointer;font-weight:500;letter-spacing:1px" style-hover="border-color:#AE8A56;color:#AE8A56">{{langBtnLabel}}</button>
+        <sc-if value="{{showLangBtn}}" hint-placeholder-val="{{true}}"><button onClick="{{toggleLang}}" style="background:{{t.bgInput}};border:1px solid {{t.border}};color:{{t.textSecondary}};padding:6px 12px;border-radius:8px;font-size:11px;font-family:'DM Mono',monospace;cursor:pointer;font-weight:500;letter-spacing:1px" style-hover="border-color:#AE8A56;color:#AE8A56">{{langBtnLabel}}</button></sc-if>
         <div style="display:flex;align-items:center;gap:8px;background:{{t.bgInput}};border:1px solid {{t.border}};border-radius:8px;padding:5px 12px;cursor:pointer" onClick="{{toggleDark}}">
-          <span style="font-size:11px;color:{{t.textMuted}};font-family:'DM Mono',monospace">{{darkBtnLabel}}</span>
+          <sc-if value="{{showDarkLabel}}" hint-placeholder-val="{{true}}"><span style="font-size:11px;color:{{t.textMuted}};font-family:'DM Mono',monospace">{{darkBtnLabel}}</span></sc-if>
           <div style="width:34px;height:18px;border-radius:9px;background:{{t.toggleBg}};position:relative;transition:background 0.2s;flex:none">
             <div style="position:absolute;top:2px;left:{{t.toggleKnobLeft}};width:14px;height:14px;border-radius:50%;background:#FFFFFF;transition:left 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.3)"></div>
           </div>
@@ -434,7 +451,7 @@ input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
             <div style="font-family:'League Spartan',sans-serif;font-size:20px;font-weight:700;color:{{t.textPrimary}};letter-spacing:0.5px">{{tx.recentTitle}}</div>
             <div style="font-size:13px;color:{{t.textSecondary}};margin-top:3px">{{tx.recentSub}}</div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
             <button onClick="{{toggleGantt}}" style="background:{{t.accentLight}};border:1px solid rgba(174,138,86,0.25);color:#AE8A56;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer" style-hover="background:rgba(174,138,86,0.18)">{{ganttBtnLabel}}</button>
             <button onClick="{{refresh}}" style="background:{{t.bgInput}};border:1px solid {{t.border}};color:{{t.textSecondary}};padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="border-color:#AE8A56">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 16 16"><path d="M14 8A6 6 0 0 1 2 8" stroke-linecap="round"/><path d="M2 4v4h4M14 12V8h-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -442,7 +459,7 @@ input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
             </button>
             <div style="position:relative">
               <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none" width="12" height="12" fill="none" stroke="{{t.textMuted}}" stroke-width="1.5" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
-              <input type="text" value="{{searchQuery}}" onChange="{{setSearch}}" placeholder="{{tx.searchPh}}" style="background:{{t.bgInput}};border:1px solid {{t.border}};border-radius:8px;padding:7px 12px 7px 28px;color:{{t.textPrimary}};font-size:13px;width:200px" style-focus="border-color:#AE8A56">
+              <input type="text" value="{{searchQuery}}" onChange="{{setSearch}}" placeholder="{{tx.searchPh}}" style="background:{{t.bgInput}};border:1px solid {{t.border}};border-radius:8px;padding:7px 12px 7px 28px;color:{{t.textPrimary}};font-size:13px;width:{{reqSearchW}}" style-focus="border-color:#AE8A56">
             </div>
           </div>
         </div>
@@ -555,7 +572,7 @@ input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
         <div style="background:{{t.bgCard}};border-radius:14px;box-shadow:{{t.cardShadow}};padding:28px;margin-bottom:28px;border:1px solid {{t.border}}">
 
           <!-- HEADER + MODE TABS -->
-          <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap">
             <div style="width:40px;height:40px;border-radius:10px;background:rgba(10,102,194,0.12);border:1px solid rgba(10,102,194,0.25);display:flex;align-items:center;justify-content:center;flex:none">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
             </div>
@@ -978,7 +995,7 @@ input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
             {{tx.planAnnualSaving}}
           </div>
         </sc-if>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:start">
+        <div style="display:grid;grid-template-columns:{{planGridCols}};gap:20px;align-items:start">
           <div style="background:{{t.bgCard}};border:1px solid {{t.border}};border-radius:16px;padding:28px;box-shadow:{{t.cardShadow}}">
             <div style="font-family:'League Spartan',sans-serif;font-size:17px;font-weight:700;color:{{t.textPrimary}};margin-bottom:3px">{{tx.planStarterName}}</div>
             <div style="font-size:12px;color:{{t.textSecondary}};margin-bottom:20px">{{tx.planStarterDesc}}</div>
@@ -1077,7 +1094,7 @@ input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
   <!-- SUPPORT WIDGET -->
   <div style="position:fixed;bottom:24px;right:24px;z-index:300;display:flex;flex-direction:column;align-items:flex-end;gap:10px">
     <sc-if value="{{supChatOpen}}" hint-placeholder-val="{{false}}">
-      <div style="width:320px;background:#0C1235;border:1px solid rgba(174,138,86,0.25);border-radius:16px;overflow:hidden;box-shadow:0 8px 36px rgba(0,0,0,0.55);animation:supPop 0.25s ease">
+      <div style="width:{{supChatWidth}};background:#0C1235;border:1px solid rgba(174,138,86,0.25);border-radius:16px;overflow:hidden;box-shadow:0 8px 36px rgba(0,0,0,0.55);animation:supPop 0.25s ease">
         <div style="background:#060923;padding:13px 16px;display:flex;align-items:center;gap:9px;border-bottom:1px solid rgba(174,138,86,0.12)">
           <div style="width:7px;height:7px;border-radius:50%;background:#16A34A;animation:pulse 2s infinite"></div>
           <div style="flex:1">
@@ -2187,6 +2204,11 @@ class Component extends DCLogic {
     const loginCardPad     = mob ? '24px 20px 28px' : '32px 36px 36px';
     const loginFormPad      = mob ? '20px 20px 28px' : '28px 40px 36px';
     const loginRegPad       = mob ? '20px 20px 24px' : '28px 40px 32px';
+    const planGridCols       = mob ? '1fr' : '1fr 1fr 1fr';
+    const showLangBtn        = !mob;
+    const showDarkLabel      = !mob;
+    const supChatWidth       = 'min(320px, calc(100vw - 32px))';
+    const reqSearchW         = mob ? '100%' : '200px';
 
     // Support
     const supShowLabel = s.supExpanded||s.supHover;
@@ -2205,7 +2227,7 @@ class Component extends DCLogic {
       sidebarTransform, sidebarZIndex, showMobileOverlay, showHamburger,
       sidebarToggleIcon, sidebarToggleTip, sidebarNavPad, sidebarNavJust, userSectionMB,
       showTopbarSub, topbarGap, creditsFullText,
-      topbarPad, contentPad, formGridCols, loginCardPad, loginFormPad, loginRegPad,
+      topbarPad, contentPad, formGridCols, planGridCols, loginCardPad, loginFormPad, loginRegPad, showLangBtn, showDarkLabel, supChatWidth, reqSearchW,
       langBtnLabel:tx.langToggle,
       darkBtnLabel:s.isDark?(s.lang==='pt'?'Claro':'Light'):(s.lang==='pt'?'Escuro':'Dark'),
       loginEmail:s.loginEmail, loginPassword:s.loginPassword, loginError:s.loginError, hasLoginError,
