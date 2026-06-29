@@ -32,7 +32,12 @@
 
 <!-- Tema e favicon -->
 <meta name="theme-color" content="#AE8A56">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23060923'/><text y='24' x='4' font-size='22' font-family='serif' fill='%23AE8A56'>V</text></svg>">
+
+<link rel="icon" href="/veross-scraper-ai-favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/veross-scraper-ai-favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/veross-scraper-ai-favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -51,8 +56,6 @@ input,textarea,select{outline:none;font-family:'DM Sans',sans-serif;}
 @keyframes nodeFlash{0%{opacity:0;transform:scale(0.15)}20%{opacity:1;transform:scale(1)}80%{opacity:0.6;transform:scale(1.4)}100%{opacity:0;transform:scale(2.6)}}
 </style>
 </helmet>
-
-<div style="min-height:100vh;background:{{t.bgPage}};font-family:'DM Sans',sans-serif;color:{{t.textPrimary}};transition:background 0.25s,color 0.25s">
 
 <!-- ══════════════ VERIFICANDO SESSÃO ══════════════ -->
 <sc-if value="{{isChecking}}" hint-placeholder-val="{{true}}">
